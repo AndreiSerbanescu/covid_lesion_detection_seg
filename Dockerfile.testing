@@ -28,6 +28,10 @@ COPY code/setup.py /app/setup.py
 # TODO make alias python work as to not change setup-env script
 RUN sh /app/setup-env.sh
 
+RUN pip3 install pytest
+RUN pip3 install mock
+
+COPY test /app/test
 COPY code /app/code
 COPY model /app/model
 COPY listen.py /app/listen.py
