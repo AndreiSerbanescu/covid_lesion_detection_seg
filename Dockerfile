@@ -31,3 +31,5 @@ RUN sh /app/setup-env.sh
 COPY code /app/code
 COPY model /app/model
 COPY listen.py /app/listen.py
+COPY common /app/common
+COPY lesion_detector_common /app/lesion_detector_common
