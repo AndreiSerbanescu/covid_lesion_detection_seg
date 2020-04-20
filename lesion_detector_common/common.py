@@ -3,7 +3,7 @@ from common.utils import *
 import subprocess as sb
 import shutil
 
-def covid_detector_base(param_dict, get_volumes_from_output_directory, output_dir):
+def covid_detector_base(param_dict, model_path, get_volumes_from_output_directory, output_dir):
     rel_source_file = param_dict["source_file"][0]
     data_share = os.environ["DATA_SHARE_PATH"]
 
@@ -15,7 +15,6 @@ def covid_detector_base(param_dict, get_volumes_from_output_directory, output_di
     source_file = os.path.join(data_share, rel_source_file)
 
     script_path = "/app/code/keras_retinanet/bin/predict_covid.py"
-    model_path = "/app/model/vgg19_csv_55.h5"
 
     input_path, cp_exit_code = __create_and_copy_files_to_tmp_input_directory(source_file)
 

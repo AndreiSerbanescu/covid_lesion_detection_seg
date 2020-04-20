@@ -23,7 +23,8 @@ def __get_mask_and_detection_volumes(files):
 
 
 def covid_detector_seg(param_dict):
-    return covid_detector_base(param_dict, __get_mask_and_detection_volumes, output_dir)
+    model_path = "/app/model/vgg19_csv_55.h5"
+    return covid_detector_base(param_dict, model_path, __get_mask_and_detection_volumes, output_dir)
 
 
 if __name__ == "__main__":
