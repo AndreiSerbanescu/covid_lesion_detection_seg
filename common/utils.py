@@ -22,7 +22,12 @@ def setup_logging():
 def mark_yourself_ready():
     hostname = os.environ['HOSTNAME']
     data_share_path = os.environ['DATA_SHARE_PATH']
-    cmd = "touch {}/{}_ready.txt".format(data_share_path, hostname)
+
+    ready_directory = os.path.join(data_share_path, "containers_ready")
+    os.makedirs(ready_directory, exist_ok=True)
+
+    ready_filepath = os.path.join(ready_directory, f"{hostname}_ready.txt")
+    cmd = f"touch {ready_filepath}"
 
     logging.info("Marking as ready")
     sb.call([cmd], shell=True)
