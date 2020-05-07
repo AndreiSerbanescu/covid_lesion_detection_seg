@@ -1,0 +1,15 @@
+version: '3'
+services:
+  lesion_detection_seg:
+    build: ./
+    container_name: lesion_detection_seg_jip
+    hostname: lesion_detection_seg_jip
+    environment:
+      - WORKFLOW_DIR=/app/workflow
+      - BATCH_NAME=batch1
+      - OPERATOR_IN_DIR=input
+      - OPERATOR_OUT_DIR=output
+      - PYTHONBUFFERED=1
+    command: python3 -u /app/run_container_jip.py
+    volumes:
+    - ./workflow:/app/workflow

@@ -21,15 +21,18 @@ RUN pip3 install simpleitk==1.2.4
 # fix opencv import issue
 RUN apt-get install libsm6 libxext6 libxrender-dev -y
 
-COPY code/keras_retinanet /app/keras_retinanet
-COPY code/setup-env.sh /app/setup-env.sh
-COPY code/setup.py /app/setup.py
+COPY files/source/code/keras_retinanet /app/keras_retinanet
+COPY files/source/code/setup-env.sh /app/setup-env.sh
+COPY files/source/code/setup.py /app/setup.py
 
 # TODO make alias python work as to not change setup-env script
 RUN sh /app/setup-env.sh
 
-COPY code /app/code
-COPY model /app/model
-COPY listen.py /app/listen.py
-COPY common /app/common
-COPY lesion_detector_common /app/lesion_detector_common
+
+RUN mkdir /app/data_share
+ENV DATA_SHARE_PATH /app/data_share
+
+COPY files/source/ /app/
+COPY files/interface/ /app/
+
+CMD ["python3","-u","/app/run_container_jip.py"]

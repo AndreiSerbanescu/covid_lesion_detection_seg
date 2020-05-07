@@ -24,7 +24,23 @@ def __get_mask_and_detection_volumes(files):
 
 def covid_detector_seg(param_dict):
     model_path = "/app/model/vgg19_csv_55.h5"
-    return covid_detector_base(param_dict, model_path, __get_mask_and_detection_volumes, output_dir)
+
+    rel_source_file = param_dict["source_file"][0]
+    data_share = os.environ["DATA_SHARE_PATH"]
+
+    # remove trailing / at the beggining of name
+    # otherwise os.path.join has unwanted behaviour for base dirs
+    # i.e. join(/app/data_share, /app/wrongpath) = /app/wrongpath
+    rel_source_file = rel_source_file.lstrip('/')
+
+    source_file = os.path.join(data_share, rel_source_file)
+
+    return covid_detector_base(source_file, model_path, __get_mask_and_detection_volumes, output_dir)
+
+
+def covid_detector_absolute(source_file):
+    model_path = "/app/model/vgg19_csv_55.h5"
+    return covid_detector_base(source_file, model_path, __get_mask_and_detection_volumes, output_dir)
 
 
 if __name__ == "__main__":

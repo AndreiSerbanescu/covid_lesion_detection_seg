@@ -3,17 +3,9 @@ from common.utils import *
 import subprocess as sb
 import shutil
 
-def covid_detector_base(param_dict, model_path, get_volumes_from_output_directory, output_dir):
-    rel_source_file = param_dict["source_file"][0]
+def covid_detector_base(source_file, model_path, get_volumes_from_output_directory, output_dir):
+
     data_share = os.environ["DATA_SHARE_PATH"]
-
-    # remove trailing / at the beggining of name
-    # otherwise os.path.join has unwanted behaviour for base dirs
-    # i.e. join(/app/data_share, /app/wrongpath) = /app/wrongpath
-    rel_source_file = rel_source_file.lstrip('/')
-
-    source_file = os.path.join(data_share, rel_source_file)
-
     script_path = "/app/code/keras_retinanet/bin/predict_covid.py"
 
     input_path, cp_exit_code = __create_and_copy_files_to_tmp_input_directory(source_file)
@@ -50,6 +42,8 @@ def covid_detector_base(param_dict, model_path, get_volumes_from_output_director
 
     log_debug("rel attention volume", rel_mask_volume_path)
     log_debug("rel detection volume", rel_detection_volume_path)
+
+    os.makedirs(os.path.join(data_share, output_dir), exist_ok=True)
 
     tmp_mask_path = os.path.join(tmp_output_path, mask_volume)
     data_share_mask_path = os.path.join(data_share, rel_mask_volume_path)
