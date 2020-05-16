@@ -1,4 +1,5 @@
 import os
+from common import utils
 from common.utils import *
 import subprocess as sb
 import shutil
@@ -66,7 +67,7 @@ def covid_detector_base(source_file, model_path, get_volumes_from_output_directo
 
 def __create_and_copy_files_to_tmp_input_directory(source_file):
     tmp = "/tmp"
-    input_path = os.path.join(tmp, "input")
+    input_path = os.path.join(tmp, "input-" + utils.get_unique_id())
 
     if os.path.exists(input_path):
         shutil.rmtree(input_path)
@@ -79,8 +80,8 @@ def __create_and_copy_files_to_tmp_input_directory(source_file):
     return input_path, cp_exit_code
 
 def __create_shared_output_directory():
-    # TODO not thread safe
-    tmp_output_path = "/tmp/output"
+
+    tmp_output_path = "/tmp/output-" + utils.get_unique_id()
     if os.path.exists(tmp_output_path):
         shutil.rmtree(tmp_output_path)
 
