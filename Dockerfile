@@ -1,4 +1,4 @@
-FROM nvidia/cuda:latest
+FROM nvidia/cuda:10.0-cudnn7-devel
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ RUN pip3 install numpy>=1.14
 RUN pip3 install opencv-python>=3.3.0
 RUN pip3 install pillow==7.0.0
 RUN pip3 install tqdm==4.40.2
-RUN pip3 install tensorflow==1.14.0
+RUN pip3 install tensorflow-gpu==1.14.0
 RUN pip3 install simpleitk==1.2.4
 
 # fix opencv import issue
@@ -28,11 +28,12 @@ COPY files/source/code/setup.py /app/setup.py
 # TODO make alias python work as to not change setup-env script
 RUN sh /app/setup-env.sh
 
-
 RUN mkdir /app/data_share
 ENV DATA_SHARE_PATH /app/data_share
 
 COPY files/source/ /app/
 COPY files/interface/ /app/
+
+ENV LD_LIBRARY_PATH /usr/local/cuda-10.0:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
 
 CMD ["python3","-u","/app/run_container_jip.py"]
