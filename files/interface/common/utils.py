@@ -3,10 +3,10 @@ import sys
 import os
 import subprocess as sb
 import time
-import random
+from threading import get_ident
 
 def get_unique_id():
-    return str(time.time()) + "-" + str(random.randint(0, 10000000))
+    return str(time.time()) + "-" + str(get_ident())
 
 def setup_logging():
     file_handler = logging.FileHandler("../log.log")
@@ -18,7 +18,7 @@ def setup_logging():
 
     logging.basicConfig(
         level=logging.DEBUG, # TODO level=get_logging_level(),
-        format="%(asctime)s [%(levelname)s] %(message)s",
+        # format="%(asctime)s [%(levelname)s] %(message)s",
         handlers=[
             file_handler,
             stream_handler
