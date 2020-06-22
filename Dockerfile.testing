@@ -25,7 +25,6 @@ COPY code/keras_retinanet /app/keras_retinanet
 COPY code/setup-env.sh /app/setup-env.sh
 COPY code/setup.py /app/setup.py
 
-# TODO make alias python work as to not change setup-env script
 RUN sh /app/setup-env.sh
 
 RUN pip3 install pytest
