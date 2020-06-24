@@ -25,7 +25,7 @@ COPY files/source/code/keras_retinanet /app/keras_retinanet
 COPY files/source/code/setup-env.sh /app/setup-env.sh
 COPY files/source/code/setup.py /app/setup.py
 
-sRUN sh /app/setup-env.sh
+RUN sh /app/setup-env.sh
 
 RUN mkdir /app/data_share
 ENV DATA_SHARE_PATH /app/data_share
